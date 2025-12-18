@@ -10,11 +10,18 @@ __pycache__/
 .python-version
 *.egg-info/
 
+# Node.js / Bun
+node_modules/
+
 # IDE
 .vscode/
 .idea/
 
+# Logs
+*.log
+
 # OS
 .DS_Store
 Thumbs.db
+
 

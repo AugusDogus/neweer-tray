@@ -16,6 +16,7 @@ pub fn build(b: *std.Build) void {
     exe.linkSystemLibrary("user32");
     exe.linkSystemLibrary("shell32");
     exe.linkSystemLibrary("gdi32");
+    exe.linkSystemLibrary("setupapi");
     
     // Link libc for TLS support
     exe.linkLibC();
