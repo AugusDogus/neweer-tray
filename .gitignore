@@ -1,0 +1,20 @@
+# Zig
+zig-out/
+zig-cache/
+.zig-cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.python-version
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+

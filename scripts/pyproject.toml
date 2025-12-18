@@ -1,0 +1,16 @@
+[project]
+name = "neewer-scripts"
+version = "0.1.0"
+description = "Reverse engineering scripts for Neewer light control"
+requires-python = ">=3.10"
+dependencies = [
+    "frida",
+    "pefile",
+    "pillow",
+    "hidapi",
+    "pyserial",
+]
+
+[tool.setuptools]
+py-modules = []
+
