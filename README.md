@@ -21,9 +21,9 @@ The executable will be at `zig-out/bin/neewer-tray.exe`.
 
 ## How it works
 
-This app uses the `Set_Dongle_RF_API_x64.dll` from the Neewer Control Center installation to communicate with lights. The DLL must be present at `C:\Neewer Control Center\Neewer\Set_Dongle_RF_API_x64.dll`.
+This app communicates directly with the Neewer 2.4GHz USB dongle (VID `0x0581`, PID `0x011D`) using the Windows HID API. No external DLLs or Neewer Control Center installation required.
 
-The on/off toggle command was reverse-engineered using Frida to hook the `Send_RF_DATA` function.
+The protocol was reverse-engineered using Frida to hook the `Send_RF_DATA` function in Neewer's `Set_Dongle_RF_API_x64.dll`.
 
 ## Scripts
 
