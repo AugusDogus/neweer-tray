@@ -2,8 +2,8 @@
 
 A minimal Neewer light controller.
 
-- `src/` contains the original Zig-based Windows tray app
-- `cosmic-applet/` contains a native Rust COSMIC panel applet for Linux
+- `src/` contains the Windows tray app written in Zig
+- `cosmic-applet/` contains the native COSMIC panel applet for Linux written in Rust
 
 ## Usage
 
@@ -21,15 +21,15 @@ cd cosmic-applet
 cargo build
 ```
 
-## Building
+## Building the Windows app
 
-Requires [Zig](https://ziglang.org/) 0.14+.
+Requires [Zig](https://ziglang.org/) 0.15+.
 
 ```bash
 zig build
 ```
 
-The executable will be at `zig-out/bin/neewer-tray.exe`.
+The Zig build is for the Windows tray app. The executable will be at `zig-out/bin/neewer-tray.exe`.
 
 ## How it works
 

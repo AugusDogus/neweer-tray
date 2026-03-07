@@ -1,13 +1,9 @@
 const builtin = @import("builtin");
 
-pub fn main() !void {
-    switch (builtin.os.tag) {
-        .windows => {
-            @import("windows.zig").run();
-        },
-        .linux => {
-            try @import("linux.zig").run();
-        },
-        else => @compileError("Unsupported platform"),
+pub fn main() void {
+    if (builtin.os.tag != .windows) {
+        @compileError("The Zig app is Windows-only. Use cosmic-applet/ for Linux.");
     }
+
+    @import("windows.zig").run();
 }
