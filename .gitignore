@@ -13,6 +13,11 @@ __pycache__/
 # Node.js / Bun
 node_modules/
 
+# Rust
+target/
+Cargo.lock
+!cosmic-applet/Cargo.lock
+
 # IDE
 .vscode/
 .idea/

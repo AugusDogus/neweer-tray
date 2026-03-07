@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Neewer Lights
+Type=Application
+Exec=cosmic-applet-neewer
+Terminal=false
+Categories=COSMIC;
+Keywords=COSMIC;Lights;Neewer;
+Icon=dev.augie.CosmicAppletNeewer-symbolic
+StartupNotify=true
+NoDisplay=true
+X-CosmicApplet=true
+X-OverflowPriority=10

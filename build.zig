@@ -6,26 +6,34 @@ pub fn build(b: *std.Build) void {
 
     const exe = b.addExecutable(.{
         .name = "neewer-tray",
-        .root_source_file = b.path("src/main.zig"),
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("src/main.zig"),
+            .target = target,
+            .optimize = optimize,
+        }),
         .win32_manifest = null,
     });
 
-    // Link Windows libraries
-    exe.linkSystemLibrary("user32");
-    exe.linkSystemLibrary("shell32");
-    exe.linkSystemLibrary("gdi32");
-    exe.linkSystemLibrary("setupapi");
-    
-    // Link libc for TLS support
-    exe.linkLibC();
-    
-    // Add Windows resource file for icon
-    exe.addWin32ResourceFile(.{ .file = b.path("src/icon.rc") });
-
-    // Subsystem: windows (no console window)
-    exe.subsystem = .Windows;
+    switch (target.result.os.tag) {
+        .windows => {
+            exe.linkSystemLibrary("user32");
+            exe.linkSystemLibrary("shell32");
+            exe.linkSystemLibrary("gdi32");
+            exe.linkSystemLibrary("setupapi");
+            exe.linkLibC();
+            exe.addWin32ResourceFile(.{ .file = b.path("src/icon.rc") });
+            exe.subsystem = .Windows;
+        },
+        .linux => {
+            exe.use_lld = false;
+            exe.linkLibC();
+            exe.root_module.linkSystemLibrary("gio-2.0", .{ .use_pkg_config = .force });
+            exe.root_module.linkSystemLibrary("gobject-2.0", .{ .use_pkg_config = .force });
+            exe.root_module.linkSystemLibrary("glib-2.0", .{ .use_pkg_config = .force });
+            exe.root_module.linkSystemLibrary("hidapi-hidraw", .{ .use_pkg_config = .force });
+        },
+        else => {},
+    }
 
     b.installArtifact(exe);
 

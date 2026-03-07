@@ -1,6 +1,9 @@
 # Neewer Tray
 
-A minimal Windows system tray app to toggle Neewer lights on/off via the 2.4GHz USB dongle.
+A minimal Neewer light controller.
+
+- `src/` contains the original Zig-based Windows tray app
+- `cosmic-applet/` contains a native Rust COSMIC panel applet for Linux
 
 ## Usage
 
@@ -8,6 +11,15 @@ A minimal Windows system tray app to toggle Neewer lights on/off via the 2.4GHz 
 2. Run `neewer-tray.exe`
 3. Click the lightbulb icon in the system tray to toggle lights
 4. Right-click for menu with Exit option
+
+## Linux COSMIC applet
+
+If you are using COSMIC on Linux, the Rust applet lives in `cosmic-applet/`.
+
+```bash
+cd cosmic-applet
+cargo build
+```
 
 ## Building
 
