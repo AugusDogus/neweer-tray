@@ -1,5 +1,4 @@
 mod app;
-mod device;
 
 fn main() -> cosmic::iced::Result {
     tracing_subscriber::fmt()

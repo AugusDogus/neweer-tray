@@ -1,8 +1,8 @@
-use crate::device;
 use cosmic::app::{Core, Task};
 use cosmic::iced::window::Id;
 use cosmic::prelude::*;
 use cosmic::widget;
+use cosmic_applet_neewer::device;
 
 const APP_ID: &str = "dev.augie.CosmicAppletNeewer";
 const DEFAULT_ICON: &str = "dev.augie.CosmicAppletNeewer-symbolic";
