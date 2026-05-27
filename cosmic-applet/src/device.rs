@@ -50,16 +50,37 @@ fn build_hid_write_packet_32() -> [u8; 33] {
     packet
 }
 
+// Empirical: in the captured Windows protocol session, the on/off command
+// appears ~19 times per logical click (see scripts/analyze_protocol.py).
+// Sending a single HID write does not reliably reach the lights; we need
+// to retransmit. The lights dedupe identical packets within a short window
+// so this still produces exactly one logical toggle per click.
+const TOGGLE_REPEATS: usize = 20;
+const TOGGLE_REPEAT_DELAY_MS: u64 = 15;
+
 fn toggle_device(api: &HidApi, device_info: &hidapi::DeviceInfo) -> Result<bool, ToggleError> {
     let device = device_info.open_device(api)?;
 
-    // The dongle advertises report ID 0xBA, which is already the first byte of
-    // the discovered 64-byte packet, so we send that packet directly.
+    // The dongle's RF link is unreliable for a single HID write: lights
+    // frequently miss isolated packets, so a lone toggle gets dropped and
+    // the lights don't change state. The original Neewer Windows app
+    // retransmits the same on/off command ~19 times per logical click
+    // (see scripts/analyze_protocol.py); the lights dedupe identical
+    // packets within a short window so this still results in exactly
+    // one toggle per invocation.
     let packet_64 = build_packet_64();
-    if device.write(&packet_64).is_ok() {
-        return Ok(true);
+    let mut succeeded = 0usize;
+    for i in 0..TOGGLE_REPEATS {
+        if let Ok(n) = device.write(&packet_64) {
+            if n == packet_64.len() {
+                succeeded += 1;
+            }
+        }
+        if i + 1 < TOGGLE_REPEATS {
+            std::thread::sleep(std::time::Duration::from_millis(TOGGLE_REPEAT_DELAY_MS));
+        }
     }
-    if device.send_output_report(&packet_64).is_ok() {
+    if succeeded > 0 {
         return Ok(true);
     }
 
