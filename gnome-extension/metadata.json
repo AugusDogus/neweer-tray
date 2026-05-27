@@ -1,0 +1,9 @@
+{
+  "uuid": "neewer-quick-toggle@augie.dev",
+  "name": "Neewer Quick Toggle",
+  "description": "Adds a Neewer light toggle tile to GNOME quick settings.",
+  "shell-version": ["50"],
+  "session-modes": ["user"],
+  "url": "https://github.com/AugusDogus/neweer-tray",
+  "version": 1
+}
